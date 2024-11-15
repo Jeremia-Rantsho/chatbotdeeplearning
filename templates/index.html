@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHIETA Chatbot Interface</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="{{ url_for('static', filename='js/bot.js')}}" defer></script>
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="graduate-icon"><img src="{{ url_for('static', filename='images/id pict.jfif')}}" alt="Avatar"
+                    style="border-radius: 20%; width: 85px;" height="97px">
+            </div><br><br>
+            <ul>
+                <li>🛠️ Help & Support</li>
+                <li>⚙️ Settings</li>
+                <li>👤 My Profile</li>
+                <li>🔔 Notifications</li>
+                <li>📝 Feedback</li>
+                <li>📖 Tutorials</li>
+            <!-- <li>🚪 Log Out</li> -->
+            </ul>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="welcome-box">
+                <br>Welcome, Natasia Mahure
+                <br>
+                <div class="date">September 15, 2024</div>
+            </div>
+
+            <!-- Main Box with 6 Sub Boxes -->
+            <div class="main-box">
+                <div class="sub-box">Profile
+                    <div class="graduate-icon"><img src="{{ url_for('static', filename='images/14 (2).png')}}" alt="Avatar"
+                            style="border-radius: 50%; width: 90px;">
+                    </div>
+                    <div class="tooltip-text">Profile Overview|Personal Information|Profile Picture</div>
+                </div>
+                <div class="sub-box">Skills Development Committee Toolkit
+                    <div class="graduate-icon"><img src="{{ url_for('static', filename='images/19.png')}}" alt="Avatar"
+                            style="border-radius: 50%; width: 90px;">
+                    </div>
+                    <div class="tooltip-text">Upcoming Assignments|Course Schedule|Grade</div>
+                </div>
+                <div class="sub-box">Grants Management System
+                    <div class="graduate-icon"><img src="{{ url_for('static', filename='images/17.png')}}" alt="Avatar"
+                            style="border-radius: 50%; width: 90px;">
+                    </div>
+                    <div class="tooltip-text">Upcoming Bursaries|Outstanding Fees|Grade</div>
+                </div>
+                <div class="sub-box">Integrated Management System
+                    <div class="graduate-icon"><img src="{{ url_for('static', filename='images/15.png')}}" alt="Avatar"
+                            style="border-radius: 50%; width: 90px;">
+                    </div>
+                    <div class="tooltip-text">Grades|Progress Report|Proof of Registration</div>
+                </div>
+                <div class="sub-box">Learner Management System
+                    <div class="graduate-icon"><img src="{{ url_for('static', filename='images/16.png')}}" alt="Avatar"
+                            style="border-radius: 50%; width: 90px;">
+                    </div>
+                </div>
+                <div class="sub-box">Survey
+                    <div class="graduate-icon"><img src="{{ url_for('static', filename='images/18.png')}}" alt="Avatar"
+                            style="border-radius: 50%; width: 90px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div class="bot-container" id="botContainer">
+        <!-- Chatbot Icon -->
+        <button class="bot-icon" onclick="toggleBotPopup()" id="botIcon">
+            <img src="{{ url_for('static', filename='images/chatbot.png')}}" alt="Chatbot Icon">
+        </button>
+    
+        <!-- Chatbot Popup Content -->
+        <div class="bot-popup" id="botPopup">
+            <!-- Chatbot Header -->
+            <div class="bot-header">
+                <button class="back-btn" onclick="toggleBotPopup()">
+                    <img src="{{ url_for('static', filename='images/back.png')}}" alt="Back">
+                </button>
+                <span>Ask Chatbot</span>
+            </div>
+    
+            <!-- Chatbot Body -->
+            <div class="bot-body">
+                <div class="message bot-message">
+                    <img src="{{ url_for('static', filename='images/bot-chat.png')}}" alt="Bot Avatar" class="avatar">
+                    <div class="message-content">
+                        <p>Hello, I am CHIETA Chatbot. You can ask me a question or choose from our FAQ options below.</p>
+                    </div>
+                </div>
+    
+                <!-- FAQ Card -->
+                <div class="card">
+                    <div class="card-header">Click to check out our FAQ</div>
+                    <div class="card-body">
+                        <ul class="card-list">
+                            <li><a href="#" onclick="sendFaqForPrediction(event, 'Available bursaries')">Available bursaries</a></li>
+                            <li><a href="#" onclick="sendFaqForPrediction(event, 'Latest skills resources')">Latest skills resources</a></li>
+                            <li><a href="#" onclick="sendFaqForPrediction(event, 'Available tenders')">Available tenders</a></li>
+                            <li><a href="#" onclick="sendFaqForPrediction(event, 'Available Learnership Grants')">Available Learnership Grants to apply</a></li>
+                        </ul>
+                    </div>
+                    <button class="nav-btn prev-btn" onclick="showPrevious()">&#10094;</button>
+                    <button class="nav-btn next-btn" onclick="showNext()">&#10095;</button>
+                </div><br><br>
+    
+                <!-- Chat Messages Area -->
+                <div id="chatMessages"></div>
+    
+                <!-- Additional Info Form -->
+                <div id="additional-info-form" style="display: none;">
+                    <h5>Please enter your details to continue:</h5>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department:</label>
+                        <input type="text" id="department" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name:</label>
+                        <input type="text" id="company" class="form-control" placeholder="Enter your company name">
+                    </div>
+                    <button class="btn btn-primary mt-3" onclick="submitAdditionalInfo()">Submit</button>
+                </div>
+            </div>
+    
+            <!-- User Input Area -->
+            <div class="user-input">
+                <input type="text" id="userMessage" placeholder="Type your message...">
+                <div class="input-icons">
+                    <button class="icon-btn send-btn" onclick="sendMessage()"><i class="fa fa-paper-plane"></i></button>
+                    <button class="icon-btn voice-btn"><i class="fa fa-microphone"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<br><br>
+   <script>
+
+// Toggle Chatbot Container
+function toggleBotPopup() {
+    const botPopup = document.getElementById('botPopup');
+    // Toggle between showing and hiding the bot popup
+    botPopup.style.display = botPopup.style.display === "none" || botPopup.style.display === "" ? "block" : "none";
+}
+
+
+
+
+
+// Send User Message
+function sendMessage() {
+    const message = document.getElementById('userMessage').value;
+    if (message.trim() !== "") {
+        displayUserMessage(message);
+
+        // Send message to the backend
+        fetch('/get_response', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Received response from backend:", data); // Debugging line
+            displayBotResponse(data);
+        })
+        .catch(error => {
+            console.error('Error in sending message:', error);
+            alert('There was an error connecting to the bot. Please try again later.');
+        });
+    }
+}
+
+// Send FAQ for Prediction
+// Send FAQ for Prediction
+function sendFaqForPrediction(event, faqText) {
+    // Prevent the default action of the anchor tag
+    event.preventDefault();
+
+    // Display the FAQ text in the user input area as if the user typed it
+    displayUserMessage(faqText);
+
+    // Proceed with sending the message to the backend
+    fetch('/get_response', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: faqText })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Display the bot response in the chat interface or anywhere on the page
+        const botMessage = document.createElement('div');
+        botMessage.classList.add('message', 'bot-message');
+        botMessage.innerHTML = `<div class="message-content">${data.response}</div>`;
+        document.getElementById('chatMessages').appendChild(botMessage);
+
+        if (data.show_form) {
+            document.getElementById('additional-info-form').style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error processing your request. Please try again later.');
+    });
+}
+
+
+
+
+// Display User Message
+function displayUserMessage(message) {
+    const userMessage = document.createElement('div');
+    userMessage.classList.add('message', 'user-message');
+    userMessage.innerHTML = `<div class="message-content">${message}</div>`;
+    document.getElementById('chatMessages').appendChild(userMessage);
+    document.getElementById('userMessage').value = "";
+}
+
+// Display Bot Response
+function displayBotResponse(data) {
+    const botMessage = document.createElement('div');
+    botMessage.classList.add('message', 'bot-message');
+    botMessage.innerHTML = `<div class="message-content">${data.response}</div>`;
+    document.getElementById('chatMessages').appendChild(botMessage);
+
+    if (data.show_form) {
+        console.log("Showing additional info form"); // Debugging line
+        document.getElementById('additional-info-form').style.display = 'block';
+    }
+}
+
+// Submit Additional Info Form
+function submitAdditionalInfo() {
+    const email = document.getElementById('email').value;
+    const username = document.getElementById('username').value;
+    const department = document.getElementById('department').value;
+    const company = document.getElementById('company').value;
+
+    // Send the additional information to the backend
+    fetch('/submit_additional_info', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, username, department, company })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Display the bot response in the chat interface
+        const botMessage = document.createElement('div');
+        botMessage.classList.add('message', 'bot-message');
+        botMessage.innerHTML = `<div class="message-content">${data.response}</div>`;
+        document.getElementById('chatMessages').appendChild(botMessage);
+        document.getElementById('additional-info-form').style.display = 'none'; // Hide the additional info form
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error processing your information. Please try again later.');
+    });
+}
+
+
+// Event Listener for Enter Key on Message Input
+document.getElementById('userMessage').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
+
+
+
+// Define the FAQ items and pagination variables
+const faqItems = [
+    { text: 'Our Available bursaries', query: 'Available bursaries' },
+    { text: 'Our Latest skills resources', query: 'Latest skills resources' },
+    { text: 'Our Available tenders', query: 'Available tenders' },
+    { text: 'Our Available Learnership Grants', query: 'Available Learnership Grants' },
+    // Add more FAQ items as needed
+];
+
+let currentPage = 0;
+const itemsPerPage = 4; // Number of FAQ items to display per page
+
+// Function to render the current page of FAQ items
+function renderFaqPage() {
+    const cardList = document.querySelector('.card-list');
+    cardList.innerHTML = ''; // Clear the list
+
+    // Get the items for the current page
+    const start = currentPage * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageItems = faqItems.slice(start, end);
+
+    // Add items to the list
+    pageItems.forEach(item => {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = item.text;
+        link.onclick = (event) => sendFaqForPrediction(event, item.query);
+        listItem.appendChild(link);
+        cardList.appendChild(listItem);
+    });
+
+    // Disable prev/next buttons based on page index
+    document.querySelector('.prev-btn').disabled = currentPage === 0;
+    document.querySelector('.next-btn').disabled = end >= faqItems.length;
+}
+
+// Function to show the previous page of FAQ items
+function showPrevious() {
+    if (currentPage > 0) {
+        currentPage--;
+        renderFaqPage();
+    }
+}
+
+// Function to show the next page of FAQ items
+function showNext() {
+    if ((currentPage + 1) * itemsPerPage < faqItems.length) {
+        currentPage++;
+        renderFaqPage();
+    }
+}
+
+// Initialize the FAQ display on page load
+document.addEventListener('DOMContentLoaded', renderFaqPage);
+
+
+
+
+    </script>
+</body>
+</html>
